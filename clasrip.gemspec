@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "bin/clasrip",
+    "clasrip.gemspec",
     "lib/clasrip.rb",
     "lib/clasrip/sql.rb",
     "test/helper.rb",
