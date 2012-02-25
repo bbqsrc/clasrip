@@ -12,15 +12,18 @@ end
 require 'rake'
 
 require 'jeweler'
+require './lib/clasrip.rb'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "clasrip"
+  gem.version = Clasrip::Version
   gem.homepage = "http://github.com/bbqsrc/clasrip"
-  gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.license = "CC0"
+  gem.summary = %Q{A scraper for classification.gov.au}
+  gem.description = %Q{A scraper for classification.gov.au}
   gem.email = "brendan@bbqsrc.net"
   gem.authors = ["Brendan Molloy"]
+  gem.executables = ["clasrip"]
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
@@ -32,19 +35,19 @@ Rake::TestTask.new(:test) do |test|
   test.verbose = true
 end
 
-require 'rcov/rcovtask'
-Rcov::RcovTask.new do |test|
-  test.libs << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
-  test.rcov_opts << '--exclude "gems/*"'
-end
+#require 'rcov/rcovtask'
+#Rcov::RcovTask.new do |test|
+#  test.libs << 'test'
+#  test.pattern = 'test/**/test_*.rb'
+#  test.verbose = true
+#  test.rcov_opts << '--exclude "gems/*"'
+#end
 
 task :default => :test
 
 require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
+  version = Clasrip::Version
 
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title = "clasrip #{version}"
