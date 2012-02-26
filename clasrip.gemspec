@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "clasrip"
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Brendan Molloy"]
-  s.date = "2012-02-25"
+  s.date = "2012-02-26"
   s.description = "A scraper for classification.gov.au"
   s.email = "brendan@bbqsrc.net"
   s.executables = ["clasrip"]
