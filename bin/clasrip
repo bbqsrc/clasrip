@@ -1,37 +1,33 @@
 #!/usr/bin/env ruby
-$:.push("./lib")
 
-if $0 == __FILE__
-  require "clasrip"
-  require "clasrip/sql"
-  require "date"
+require "clasrip"
+require "clasrip/sql"
+require "date"
 
-  if ARGV.size >= 2 and ARGV[0] == "rip"
-    scraper = Clasrip::Scraper.new(1971, Date.today.year + 1)
-	sql = Clasrip::SQL.new(ARGV[1])
-	
-	last_record = Clasrip::SQL::Classification.last
-	if last_record != nil
-      last_record = last_record.attributes
-      last_record.delete(:id)
-	  last_record[:date_of_classification] = last_record[:date_of_classification].iso8601
-    
-      date = Clasrip::SQL::Classification.last.date_of_classification
-      scraper.set_date(date.year, date.month-1, 1)
-      #puts "Set date to: #{scraper.get_date}"
+if ARGV.size >= 2 and ARGV[0] == "rip"
+  scraper = Clasrip::Scraper.new(1971, Date.today.year + 1)
+  sql = Clasrip::SQL.new(ARGV[1])
 
-      print "Finding last record (#{last_record[:title]})... "
-	  scraper.each do |record|
-		break if record == last_record
-	  end
-	  puts "Found!"
-	end
+  last_record = Clasrip::SQL::Classification.last
+  if last_record != nil
+    last_record = last_record.attributes
+    last_record.delete(:id)
+    last_record[:date_of_classification] = last_record[:date_of_classification].iso8601
+  
+    date = Clasrip::SQL::Classification.last.date_of_classification
+    scraper.set_date(date.year, date.month-1, 1)
 
-	date = scraper.get_date
-	scraper.each do |record|
-		puts "(#{record[:date_of_classification]}) #{record[:title]} [#{record[:classification]}]"
-		sql.add_record(record)
-	end
+    print "Finding last record (#{last_record[:title]})... "
+    scraper.each do |record|
+      break if record == last_record
+    end
+    puts "Found!"
+  end
+
+  date = scraper.get_date
+  scraper.each do |record|
+    puts "(#{record[:date_of_classification]}) #{record[:title]} [#{record[:classification]}]"
+    sql.add_record(record)
   end
 end
 

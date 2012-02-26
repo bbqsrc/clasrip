@@ -111,6 +111,16 @@ module Clasrip
       end
     end
     
+    def ensure_correct_encoding(s)
+      s.force_encoding("utf-8")
+      return s if s.valid_encoding?
+
+      puts ("Invalid: " + s)
+      s.encode!("utf-8", "iso-8859-1")
+      raise "Could not enforce UTF-8 encoding: '#{s}'" unless s.valid_encoding?
+      s
+    end
+
     def new_enum
       @records = Enumerator.new do |y|
         @dates[0].each do |first_date|
@@ -133,6 +143,9 @@ module Clasrip
             parse_table(table).each do |record|
               form = get_classification(record[:original_url]) or next
               record.merge!(parse_classification(form))
+              record.each_pair do |k,v|
+                record[k] = ensure_correct_encoding(v)
+              end
               y << record
             end
           end
